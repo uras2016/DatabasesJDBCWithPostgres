@@ -1,3 +1,5 @@
+package ua.goit.java.jdbc.model;
+
 public class Employee {
 
     private int id;
@@ -66,7 +68,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "ua.goit.java.jdbc.model.Employee{" +
                 "id=" + id +
                 ", second_name='" + second_name + '\'' +
                 ", name='" + name + '\'' +

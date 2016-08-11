@@ -1,5 +1,10 @@
+package ua.goit.java.jdbc.model.jdbc;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.goit.java.jdbc.Main;
+import ua.goit.java.jdbc.model.Employee;
+import ua.goit.java.jdbc.model.EmployeeDao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,7 +12,7 @@ import java.util.List;
 
 // в классе ДАО реализуем все методы для доступа в базу данных
 
-public class EmployeeDao {
+public class   JdbcEmployeeDao implements EmployeeDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
@@ -16,13 +21,14 @@ public class EmployeeDao {
     private final String password = "111";
 
 
-    public EmployeeDao() {
+    public JdbcEmployeeDao() {
         loadDriver();
 
     }
 
     // Динамический запрос
 // достаем сотрудника по id              PREPARED STATEMENT
+    @Override
     public Employee load(int id){
         try (
             Connection connection = DriverManager.getConnection(url, user, password);
@@ -34,7 +40,7 @@ public class EmployeeDao {
             if (resultSet.next()){
                 return createEmployee(resultSet);
             }else {
-                throw new RuntimeException("Can't find Employee with id " + id);
+                throw new RuntimeException("Can't find ua.goit.java.jdbc.model.Employee with id " + id);
             }
 
         } catch (SQLException e) {
@@ -48,6 +54,7 @@ public class EmployeeDao {
 
 
 // простой запрос
+    @Override
     public List<Employee> getAll(){
 
         List<Employee> result = new ArrayList<>();
@@ -78,7 +85,7 @@ public class EmployeeDao {
         return result;
     }
 
-    private Employee createEmployee(ResultSet resultSet) throws SQLException { // метод для создания Employee
+    private Employee createEmployee(ResultSet resultSet) throws SQLException { // метод для создания ua.goit.java.jdbc.model.Employee
         Employee employee = new Employee();
         employee.setId(resultSet.getInt("ID"));  // достаем результаті по названию колонок
         employee.setSecond_name(resultSet.getString("SECOND_NAME"));
